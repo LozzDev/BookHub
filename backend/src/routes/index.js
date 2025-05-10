@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const booksRouter = require('./book.routes');
 
-router.get('/', (req, res) => {
-    res.send('Hola desde /');
-});
+router.use('/', booksRouter);
 
 module.exports = router;
