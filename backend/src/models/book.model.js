@@ -31,4 +31,4 @@ const bookSchema = new mongoose.Schema({
     usuarioId: {type:String, required:true}
 });
 
-module.exports = mongoose.model('Book', bookSchema);
+module.exports = mongoose.model('Book', bookSchema, 'Book');

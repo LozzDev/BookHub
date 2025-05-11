@@ -11,7 +11,7 @@ async function getBooks(req, res) {
 }
 
 async function getBookById(req, res){
-    const {id} = req.params.id;
+    const id = req.params.id;
 
     try{
         const book = await Book.findById(id);
@@ -34,12 +34,12 @@ async function createBook(req, res){
         return res.status(200).json(book);
     }catch(error){
         console.error('Error creando el libro: ', error);
-        return res.status(500).json({message: 'Error creando el libro'})
+        return res.status(500).json({message: 'Error creando el libro: ',error})
     }
 }
 
 async function deleteBookById(req, res){
-    const {id} = req.params.id;
+    const id = req.params.id;
 
     try{
         const book = await Book.findByIdAndDelete(id);

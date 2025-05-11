@@ -4,7 +4,7 @@ const app = express();
 const routes = require('./routes');
 
 app.use(cors())
-
+app.use(express.json());
 app.use('/bookhub', routes);
 
 module.exports = app;
