@@ -2,7 +2,7 @@ require('dotenv').config();
 const app = require('./src/app');
 const { connectToDataBase } = require('./src/config/connectDataBase');
 
-const port = 3000; //añadir el port del .env
+const port = process.env.PORT; //añadir el port del .env
 
 connectToDataBase();
 
