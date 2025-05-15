@@ -6,7 +6,9 @@ const Header = () => {
 
   return (
     <div className='flex bg-black w-full h-20 place-items-center'>
-        <div className='logo m-5'>
+        <div className='logo m-5 cursor-pointer' onClick={() => {
+                 navigate(`/`);
+            }}>
             <img src="" alt="" />
             <p className='text-amber-200'>BookHub</p>
         </div>
