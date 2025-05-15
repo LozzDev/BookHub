@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import BookCard from '../components/BookCard';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +32,7 @@ const Home = () => {
 
   const handleDetailsClick = (book) => {
     console.log('detalles del libro:', book);
-    // Aquí irá el navigate a la página de detalles
+    navigate(`/book-details/${book._id}`);
   };
 
   return (
