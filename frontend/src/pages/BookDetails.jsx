@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import Header from '../components/Header';
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -30,7 +31,10 @@ const BookDetails = () => {
   }, [id]);
 
   return (
+    <>
+    <Header/>
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-300 p-6 flex justify-center items-center">
+      
       <div className="bg-[#f5f1ec] shadow-xl rounded-lg p-6 max-w-6xl w-full flex gap-8">
         {/* Portada del libro */}
         <div className="w-1/2 flex justify-center items-start">
@@ -65,6 +69,8 @@ const BookDetails = () => {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 
