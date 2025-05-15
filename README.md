@@ -2,7 +2,7 @@
 
 ## Hi developer 👋
 
-This project is under development, but at the moment you can try my backend!
+This project is under development, but at the moment you can try some features!
 ### Please follow these steps for backend:
 1. clone the project
 ```
