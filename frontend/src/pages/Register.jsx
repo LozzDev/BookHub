@@ -10,7 +10,7 @@ const Register = () => {
         >
         <div className='bg-black/20 flex flex-col w-96 items-center rounded-2xl p-7 shadow-2xl'>
           <p className='text-xl mb-4 text-black font-medium'>Registrarse</p>
-          <form action="" className='flex flex-col gap-4 w-full'>
+          <form action="" className='flex flex-col gap-3 w-full'>
             <label className='text-black'>Email</label>
             <input type="text" className='bg-white rounded-md p-2 shadow' />
             <label className='text-black'>Usuario</label>
