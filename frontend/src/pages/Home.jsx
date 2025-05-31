@@ -6,6 +6,7 @@ import Header from '../components/Header';
 const Home = () => {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +30,19 @@ const Home = () => {
     };
 
     fetchData();
+
+     const checkAuth = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/bookhub/users/me', {
+          credentials: 'include'
+        });
+        setIsAuthenticated(res.ok);
+      } catch (error) {
+        setIsAuthenticated(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const handleDetailsClick = (book) => {
@@ -41,14 +55,17 @@ const Home = () => {
   return (
     <div className="">
       <Header/>
-      <div className="mb-8 text-center">
+      {
+        !isAuthenticated && (<div className="mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">BOOKHUB</h1>
         <p className="text-lg mb-4">Lee, descarga y disfruta.</p>
         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer" onClick={() => {
           navigate('/register')}}>
           Regístrate
         </button>
-      </div>
+      </div>)
+      }
+      
 
       <div className="catalog p-5 place-items-center">
         <h2 className="text-2xl font-semibold mb-4 place-self-center">Catálogo</h2>

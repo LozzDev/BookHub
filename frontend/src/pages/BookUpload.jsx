@@ -32,6 +32,7 @@ const BookUpload = () => {
 
       await fetch('http://localhost:3000/bookhub/books', {
         method: 'POST',
+        credentials: 'include',
         body: form,
       });
     } catch (error) {
