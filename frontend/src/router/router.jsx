@@ -5,7 +5,8 @@ import BookUpload from '../pages/BookUpload';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
 import Register from '../pages/Register';
-
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute'; // 👈 importar nuevo componente
 
 const Router = createBrowserRouter([
   {
@@ -14,25 +15,44 @@ const Router = createBrowserRouter([
   },
   {
     path: '/register',
-    element: <Register />,
+    element: (
+      <PublicRoute>
+        <Register />
+      </PublicRoute>
+    ),
   },
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
   {
     path: '/profile',
-    element: <Profile />,
+    element: (
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/book-details/:id',
-    element: <BookDetails />,
+    element: (
+      <PrivateRoute>
+        <BookDetails />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/book-upload',
-    element: <BookUpload />,
+    element: (
+      <PrivateRoute>
+        <BookUpload />
+      </PrivateRoute>
+    ),
   },
-  
 ]);
 
 export default Router;

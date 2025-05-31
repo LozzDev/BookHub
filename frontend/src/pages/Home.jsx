@@ -36,22 +36,25 @@ const Home = () => {
     navigate(`/book-details/${book._id}`);
   };
 
+
+
   return (
     <div className="">
       <Header/>
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">BOOKHUB</h1>
         <p className="text-lg mb-4">Lee, descarga y disfruta.</p>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer" onClick={() => {
+          navigate('/register')}}>
           Regístrate
         </button>
       </div>
 
-      <div className="catalog p-5">
-        <h2 className="text-2xl font-semibold mb-4">Catálogo</h2>
+      <div className="catalog p-5 place-items-center">
+        <h2 className="text-2xl font-semibold mb-4 place-self-center">Catálogo</h2>
 
         {/* Grid de libros */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ">
           {books.length > 0 ? (
             books.map((book) => (
               <BookCard
