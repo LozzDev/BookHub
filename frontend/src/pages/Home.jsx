@@ -3,6 +3,7 @@ import BookCard from '../components/BookCard';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
+
 const Home = () => {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
@@ -56,35 +57,52 @@ const Home = () => {
     <div className="">
       <Header/>
       {
-        !isAuthenticated && (<div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-2">BOOKHUB</h1>
-        <p className="text-lg mb-4">Lee, descarga y disfruta.</p>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer" onClick={() => {
-          navigate('/register')}}>
-          Regístrate
-        </button>
-      </div>)
+        !isAuthenticated && (
+          <div className='flex justify-center place-items-center  flex-col lg:flex-row'>
+            <div className="mb-8 text-center">
+              <h1 style={{ fontFamily: 'Karma, serif', textShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)' }} className="lg:text-8xl text-6xl font-semibold tracking-widest">
+                BOOKHUB
+              </h1>
+              <p className="text-lg mb-4 font-medium">Lee, descarga y disfruta.</p>
+              <button className="bg-black text-white px-8 py-1 rounded-full hover:bg-gray-900 transition cursor-pointer" onClick={() => {
+                navigate('/register')}}>
+                Regístrate
+              </button>
+            </div>
+            <div className=''>
+                <img src='../../book.png' width={712} />
+            </div>
+          </div>
+      )
       }
       
 
-      <div className="catalog p-5 place-items-center">
-        <h2 className="text-2xl font-semibold mb-4 place-self-center">Catálogo</h2>
+      <div className="catalog p-5">
+        <h2
+          className="text-3xl font-semibold mb-4 text-center tracking-widest"
+          style={{ textShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)' }}
+        >
+          CATÁLOGO
+        </h2>
 
-        {/* Grid de libros */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ">
-          {books.length > 0 ? (
-            books.map((book) => (
-              <BookCard
-                key={book._id}
-                image={book.coverImage}
-                title={book.title}
-                author={book.author}
-                onDetailsClick={() => handleDetailsClick(book)}
-              />
-            ))
-          ) : (
-            <p>No hay libros disponibles.</p>
-          )}
+        {/* Contenedor centrado y con ancho máximo */}
+        <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Grid flexible con tarjetas ajustables */}
+          <div className="grid gap-9 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] justify-items-center">
+            {books.length > 0 ? (
+              books.map((book) => (
+                <BookCard
+                  key={book._id}
+                  image={book.coverImage}
+                  title={book.title}
+                  author={book.author}
+                  onDetailsClick={() => handleDetailsClick(book)}
+                />
+              ))
+            ) : (
+              <p className="col-span-full text-center text-gray-500">No hay libros disponibles.</p>
+            )}
+          </div>
         </div>
       </div>
     </div>

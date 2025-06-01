@@ -23,7 +23,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className='flex bg-black w-full h-20 place-items-center'>
+    <div className='flex bg-black w-full h-20 place-items-center mb-20'>
         <div className='logo m-5 cursor-pointer' onClick={() => {
                  navigate(`/`);
             }}>
