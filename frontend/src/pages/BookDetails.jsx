@@ -64,7 +64,27 @@ const BookDetails = () => {
 
   {/* Botones */}
   <div className="flex justify-center mt-4 gap-4 mb-2">
-    <button className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition-all cursor-pointer">
+    <button
+      onClick={async () => {
+        try {
+          const response = await fetch(book.file);
+          const blob = await response.blob();
+
+          const extension = book.fileType?.toLowerCase() === 'pdf' ? 'pdf' : 'epub';
+          const filename = `${book.title?.replace(/\s+/g, '_') || 'libro'}.${extension}`;
+
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        } catch (error) {
+          console.error('❌ Error al descargar el archivo:', error.message);
+        }
+      }}
+      className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition-all cursor-pointer text-center"
+    >
       Descargar
     </button>
     <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-all flex items-center gap-2 cursor-pointer">

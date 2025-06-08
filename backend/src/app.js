@@ -10,6 +10,14 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(express.json());
+
 app.use('/bookhub', routes);
+app.use((err, req, res, next) => {
+  console.error('🔥 Error global:', err.message);
+  res.status(500).json({
+    message: 'Error capturado por el servidor',
+    error: err.message,
+  });
+});
 
 module.exports = app;
