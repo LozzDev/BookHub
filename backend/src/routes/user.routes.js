@@ -17,6 +17,10 @@ router.post('/logout', (req, res) => {
 // ⚠️ Importante: /me debe ir antes de /:id
 router.get('/me', authMiddleware, userController.getMe);
 
+// 🆕 Ruta para actualizar un usuario
+router.put('/:id', authMiddleware, userController.updateUserById);
+
+// Rutas que dependen de ID (delete, get)
 router.delete('/:id', authMiddleware, userController.deleteUserById);
 router.get('/:id', authMiddleware, userController.getUserById);
 

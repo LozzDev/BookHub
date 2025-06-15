@@ -118,11 +118,68 @@ async function getMe(req, res) {
   }
 }
 
+async function updateUserById(req, res) {
+  const id = req.params.id.trim();
+  const { name, email, password, currentPassword } = req.body;
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    // Si se quiere cambiar la contraseña, verificar primero la actual
+    if (password) {
+      if (!currentPassword) {
+        return res.status(400).json({ message: 'Debes proporcionar tu contraseña actual para cambiarla' });
+      }
+
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      if (!isMatch) {
+        return res.status(401).json({ message: 'La contraseña actual no coincide' });
+      }
+
+      const hashedNewPassword = await bcrypt.hash(password, 10);
+      user.password = hashedNewPassword;
+    }
+
+    // Cambiar email si es diferente
+    if (email && email !== user.email) {
+      const emailExists = await User.findOne({ email });
+      if (emailExists && emailExists._id.toString() !== user._id.toString()) {
+        return res.status(400).json({ message: 'Ese email ya está en uso' });
+      }
+      user.email = email;
+    }
+
+    // Cambiar nombre si es diferente
+    if (name && name !== user.name) {
+      user.name = name;
+    }
+
+    await user.save();
+
+    return res.status(200).json({
+      message: 'Usuario actualizado correctamente',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      }
+    });
+
+  } catch (error) {
+    console.error('Error actualizando el usuario: ', error);
+    return res.status(500).json({ message: 'Error actualizando el usuario' });
+  }
+}
+
 module.exports = {
     login,
     createUser,
     deleteUserById,
     getUserById,
-    getMe
+    getMe,
+    updateUserById
 }
 
