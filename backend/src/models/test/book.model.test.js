@@ -57,7 +57,7 @@ describe('Modelo Book - validaciones', () => {
       coverImage: 'https://portada.jpg',
       file: 'libro.pdf',
       fileType: 'PDF',
-      usuarioId: 'usuario123'
+      userId: 'usuario123'
     });
 
     await expect(book.validate()).resolves.toBeUndefined();

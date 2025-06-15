@@ -15,9 +15,7 @@ router.post('/logout', (req, res) => {
 });
 
 // ⚠️ Importante: /me debe ir antes de /:id
-router.get('/me', authMiddleware, (req, res) => {
-  return res.status(200).json({ user: req.user });
-});
+router.get('/me', authMiddleware, userController.getMe);
 
 router.delete('/:id', authMiddleware, userController.deleteUserById);
 router.get('/:id', authMiddleware, userController.getUserById);

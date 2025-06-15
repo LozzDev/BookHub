@@ -105,10 +105,24 @@ async function getUserById(req, res) {
     }
 }
 
+async function getMe(req, res) {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error('Error en getMe:', error);
+    return res.status(500).json({ message: 'Error al obtener el usuario' });
+  }
+}
+
 module.exports = {
     login,
     createUser,
     deleteUserById,
-    getUserById
+    getUserById,
+    getMe
 }
 

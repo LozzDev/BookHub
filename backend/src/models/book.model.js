@@ -28,7 +28,7 @@ const bookSchema = new mongoose.Schema({
         'PDF',
         'EPUB'
     ], required: true},
-    usuarioId: {type:String}
+    userId: {type:String, required:true}
 });
 
 module.exports = mongoose.model('Book', bookSchema, 'Book');

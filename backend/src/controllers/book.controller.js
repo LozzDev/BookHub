@@ -27,12 +27,33 @@ async function getBookById(req, res) {
   }
 }
 
+async function getBookByUserId(req, res) {
+  try {
+    // Asegurarse de que el middleware ha añadido el usuario
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: 'No autenticado' });
+    }
+
+    const userId = req.user.id;
+    const books = await Book.find({ userId });
+
+    return res.status(200).json(books);
+  } catch (error) {
+    console.error('❌ Error al obtener libros del usuario:', error.message);
+    return res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+
 async function createBook(req, res) {
   try {
     const { title, author, genre, description, fileType } = req.body;
     const file = req.files?.file?.[0];
     const coverImage = req.files?.coverImage?.[0];
 
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: 'No autenticado' });
+    }
     if (!title || !author || !genre || !description || !fileType || !file || !coverImage) {
       return res.status(400).json({ message: 'Faltan campos requeridos' });
     }
@@ -82,6 +103,7 @@ const secureUrlRaw = uploadedFile.secure_url.replace('/image/upload/', '/raw/upl
       fileType,
       file: secureUrlRaw,
       coverImage: uploadedCover.secure_url,
+      userId: req.user.id, // 🟢 ¡Esto es lo que faltaba!
     });
 
     return res.status(201).json(book);
@@ -130,4 +152,5 @@ module.exports = {
   getBookById,
   createBook,
   deleteBookById,
+  getBookByUserId
 };

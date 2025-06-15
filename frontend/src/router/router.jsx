@@ -7,7 +7,7 @@ import Profile from '../pages/Profile';
 import Register from '../pages/Register';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute'; // 👈 importar nuevo componente
-
+import MyBooks from '../pages/MyBooks';
 const Router = createBrowserRouter([
   {
     path: '/',
@@ -53,6 +53,15 @@ const Router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
+    {
+    path: '/my-books',
+    element: (
+      <PrivateRoute>
+        <MyBooks />
+      </PrivateRoute>
+    ),
+  },
+
 ]);
 
 export default Router;
