@@ -40,7 +40,8 @@ const Header = () => {
   };
 
   return (
-    <div className="flex bg-black w-full h-20 place-items-center mb-20 justify-between px-5">
+    <div className='mb-5'>
+      <div className="flex bg-black w-full h-20 place-items-center  justify-between px-5">
       {/* Logo */}
       <div
         className="logo cursor-pointer flex items-center gap-3"
@@ -60,19 +61,25 @@ const Header = () => {
         {isAuthenticated && (
           <>
             <button
-              className="bg-[#1064FF] text-white font-medium px-4 py-1 rounded-full cursor-pointer"
+              className="text-[#f4ede0] px-4 py-1 rounded cursor-pointer"
               onClick={() => navigate('/book-upload')}
             >
               Subir un libro
             </button>
             <button
-              className="bg-white px-4 py-1 rounded-full cursor-pointer"
+              className="text-[#f4ede0] px-4 py-1 rounded cursor-pointer"
+              onClick={() => navigate('/my-books')}
+            >
+              Mis libros
+            </button>
+            <button
+              className="text-[#f4ede0] px-4 py-1 rounded cursor-pointer"
               onClick={() => navigate('/profile')}
             >
               Mi perfil
             </button>
             <button
-              className="text-[#f4ede0] border border-[#f4ede0] px-4 py-1 rounded-full cursor-pointer bg-red-600"
+              className="text-red-600 px-4 py-1 rounded cursor-pointer"
               onClick={logout}
             >
               Cerrar sesión
@@ -146,6 +153,9 @@ const Header = () => {
         )}
       </div>
     </div>
+    <div className="bg-gradient-to-b from-black to-transparent w-full h-15"></div>
+    </div>
+    
   );
 };
 
