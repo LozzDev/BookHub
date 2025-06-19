@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Swal from 'sweetalert2';
+import ePub from 'epubjs';
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -85,6 +86,65 @@ const BookDetails = () => {
     }
   };
 
+  const handleRead = () => {
+    const fileType = book.fileType?.toLowerCase();
+    if (fileType === 'epub') {
+      Swal.fire({
+        title: '📖 Lector EPUB',
+        html: `
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <div id="epub-reader" style="width: 100%; height: 65vh; background: white; border-radius: 8px;"></div>
+            <div style="display: flex; justify-content: center; gap: 1rem;">
+              <button id="prev-page" style="padding: 6px 12px; border-radius: 15px; background: #000; color: white;">⬅️</button>
+              <span id="progress" style="color: black; font-weight: 500; margin-top: 7px"></span>
+              <button id="next-page" style="padding: 6px 12px; border-radius: 15px; background: #000; color: white;">➡️</button>
+            </div>
+          </div>
+        `,
+        width: '90%',
+        customClass: {
+          popup: 'p-0',
+        },
+        showConfirmButton: false,
+        showCloseButton: true,
+        didOpen: () => {
+          const bookInstance = ePub(book.file);
+          const rendition = bookInstance.renderTo('epub-reader', {
+            width: '100%',
+            height: '100%',
+          });
+
+          rendition.display();
+
+          // Botones navegación
+          document.getElementById('prev-page')?.addEventListener('click', () => {
+            rendition.prev();
+          });
+
+          document.getElementById('next-page')?.addEventListener('click', () => {
+            rendition.next();
+          });
+
+          // Progreso
+          bookInstance.ready.then(() => {
+            bookInstance.locations.generate(1000).then(() => {
+              rendition.on('relocated', (location) => {
+                const percent = bookInstance.locations.percentageFromCfi(location.start.cfi);
+                const progressText = `${Math.round(percent * 100)}% leído`;
+                const progressElement = document.getElementById('progress');
+                if (progressElement) progressElement.textContent = progressText;
+              });
+            });
+          });
+        }
+      });
+    } else if (fileType === 'pdf') {
+      window.open(book.file, '_blank');
+    } else {
+      Swal.fire('Error', 'Formato no soportado para lectura en línea.', 'error');
+    }
+  };
+
   return (
     <>
       <Header />
@@ -130,12 +190,15 @@ const BookDetails = () => {
                     console.error('❌ Error al descargar el archivo:', error.message);
                   }
                 }}
-                className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition-all"
+                className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition-all cursor-pointer"
               >
                 Descargar
               </button>
 
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-all">
+              <button
+                onClick={handleRead}
+                className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-all cursor-pointer"
+              >
                 Leer
               </button>
 
