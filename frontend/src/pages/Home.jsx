@@ -4,18 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 const GENRES = [
-  'Fantasy',
-  'Science Fiction',
-  'Romance',
-  'Horror',
-  'Mystery',
-  'Historical',
-  'Thriller',
-  'Adventure',
-  'Biography',
-  'Children',
-  'Drama',
-  'Poetry',
+  { value: 'Fantasy', label: 'Fantasía' },
+  { value: 'Science Fiction', label: 'Ciencia Ficción' },
+  { value: 'Romance', label: 'Romance' },
+  { value: 'Horror', label: 'Terror' },
+  { value: 'Mystery', label: 'Misterio' },
+  { value: 'Historical', label: 'Histórico' },
+  { value: 'Thriller', label: 'Suspense' },
+  { value: 'Adventure', label: 'Aventura' },
+  { value: 'Biography', label: 'Biografía' },
+  { value: 'Children', label: 'Infantil' },
+  { value: 'Drama', label: 'Drama' },
+  { value: 'Poetry', label: 'Poesía' },
 ];
 
 const Home = () => {
@@ -131,18 +131,18 @@ const Home = () => {
             className="w-4/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
           />
 
-          <select
-            value={selectedGenre}
-            onChange={(e) => setSelectedGenre(e.target.value)}
-            className="w-3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none "
-          >
-            <option value="" className=''>Todos los géneros</option>
-            {GENRES.map((genre) => (
-              <option key={genre} value={genre}>
-                {genre}
-              </option>
-            ))}
-          </select>
+<select
+  value={selectedGenre}
+  onChange={(e) => setSelectedGenre(e.target.value)}
+  className="w-3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
+>
+  <option value="">Todos los géneros</option>
+  {GENRES.map((genre) => (
+    <option key={genre.value} value={genre.value}>
+      {genre.label}
+    </option>
+  ))}
+</select>
         </div>
           <div className="grid gap-9 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] justify-items-center">
             {filteredBooks.length > 0 ? (

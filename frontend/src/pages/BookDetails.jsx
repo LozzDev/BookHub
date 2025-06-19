@@ -154,7 +154,7 @@ const BookDetails = () => {
             <img
               src={book.coverImage}
               alt="cover-image"
-              className="rounded-2xl h-[500px] lg:h-[750px] object-cover"
+              className="rounded-2xl h-[500px] lg:h-[750px] object-cover outline-1 outline-black"
             />
           </div>
 

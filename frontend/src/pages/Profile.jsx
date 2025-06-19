@@ -148,7 +148,7 @@ const Profile = () => {
       <div className="flex justify-center items-center min-h-screen gap-30 flex-col lg:flex-row px-4">
         <div>
           <img
-            src="https://lalalab-bo-catalog.s3.eu-west-1.amazonaws.com/Tirages_Photo_Carre_Personnalise_10x10cm_Slide_02_2058eebc61_ec52d91d82.webp"
+            src="/user.webp"
             alt="Foto de perfil"
             className="rounded-full"
             width="300px"
