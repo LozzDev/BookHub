@@ -148,7 +148,7 @@ const Profile = () => {
       <div className="flex justify-center items-center min-h-screen gap-30 flex-col lg:flex-row px-4">
         <div>
           <img
-            src="/user.webp"
+            src="https://res.cloudinary.com/dc732dg4w/image/upload/v1750460466/user_nm8pls.webp"
             alt="Foto de perfil"
             className="rounded-full"
             width="300px"

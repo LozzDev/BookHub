@@ -104,7 +104,7 @@ const Home = () => {
             </button>
           </div>
           <div>
-            <img src="../../book.png" width={712} />
+            <img src="https://res.cloudinary.com/dc732dg4w/image/upload/v1750460455/book_g7cpsp.png" width={712} />
           </div>
         </div>
       )}

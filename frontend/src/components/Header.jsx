@@ -47,7 +47,7 @@ const Header = () => {
         className="logo cursor-pointer flex items-center gap-3"
         onClick={() => navigate('/')}
       >
-        <img src="../../public/MiniBook.png" width={40} />
+        <img src="https://res.cloudinary.com/dc732dg4w/image/upload/v1750460462/MiniBook_ajbbra.png" width={40} />
         <p
           className="text-[#f4ede0] font-medium tracking-widest text-lg lg:text-xl"
           style={{ fontFamily: 'Karma, serif' }}
