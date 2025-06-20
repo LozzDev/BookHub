@@ -25,6 +25,56 @@ With a user-friendly and functional interface, **BookHub** aims to democratize a
 
 ## ⚙️ Installation and Requirements <a name="installation-and-requirements"></a>
 
+1. clone the project
+```
+  git clone https://github.com/LozzDev/BookHub.git
+```
+2. switch to dev branch
+```
+  git switch dev
+```
+3. Enter to backend folder
+```
+  cd backend
+```
+4. install the dependencies
+```
+  npm i
+```
+5. launch the server with nodemon script
+```
+  npm start
+```
+6. Create your own .env with the follow attributes
+```
+PORT=3000
+
+DATABASE_URL=mongoDatabaseUrl | you can get a free database here -> https://www.mongodb.com/resources/basics/databases/cloud-databases/free-cloud-database
+
+JWT_SECRET=secretcode123
+```
+
+### Please follow these steps for frontend (open a new console tab):
+1. Enter to root folder
+```
+  cd ..
+```
+2. Enter to frontend folder
+```
+  cd frontend
+```
+3. install the dependencies
+```
+  npm i
+```
+4. Create your own .env with the follow attributes
+```
+VITE_API = your backend direction example http://localhost:3000
+```
+5. launch the server
+```
+  npm run dev
+```
 
 
 ## 👥 **Team Members**  
@@ -67,7 +117,7 @@ With a user-friendly and functional interface, **BookHub** aims to democratize a
 ├─ 📂 frontend  
 │ ├─ 📂 components  
 │ ├─ 📂 pages  
-│ ├─ 📂 router 
+│ ├─ 📂 router  
 │ └─ main.jsx
  
 ├─ 📄 README.md  
@@ -76,15 +126,42 @@ With a user-friendly and functional interface, **BookHub** aims to democratize a
 
 ## 💻 **Technologies Used**
 
-_(To be completed)_
+### 👁️ Frontend
+- **React** – Main library for building the user interface.
+- **Vite** – Fast build tool and development server for React.
+- **Tailwind CSS** – Utility-first CSS framework for responsive design.
 
----
+### 🧠 Backend
+- **Node.js** – JavaScript runtime for server-side development.
+- **Express.js** – Minimalist web framework for building RESTful APIs.
+- **MongoDB** – NoSQL database to store users and books.
 
 ## 📚 **Libraries**
 
-_(To be completed)_
+### 👁️ Frontend Libraries
+- **React Router DOM** – Handles routing in the browser.
+- **Framer Motion** – Powerful animation library for React.
+- **EPUB.js** – Client-side EPUB reader to render books in-browser.
+- **SweetAlert2** – Beautiful, customizable alert dialogs.
+- **Cloudinary SDK** – Upload and retrieve book covers from Cloudinary.
 
----
+#### Development & Testing
+- **Vite** – Frontend build tool and dev server.
+- **ESLint** – Linter for code quality.
+- **React Testing Library** – Testing utilities for React components.
+- **Vitest** – Blazing fast unit and integration testing framework.
+- **JSDOM** – Simulates a browser environment for testing.
+
+### 🧠 Backend Libraries
+- **Mongoose** – MongoDB object modeling for Node.js.
+- **Dotenv** – Loads environment variables.
+- **Cors** – Enables Cross-Origin Resource Sharing.
+- **Cookie-Parser** – Parses cookies for authentication and session management.
+- **JWT (jsonwebtoken)** – Secure token-based authentication.
+- **Bcrypt** – Password hashing.
+- **Multer** – Handles multipart/form-data for file uploads.
+- **Multer-Storage-Cloudinary** – Integrates Multer with Cloudinary for media storage.
+- **Cloudinary SDK** – Used for managing media assets in the cloud.
 
 ## 🧪 **Test Screenshots**
 
