@@ -128,13 +128,13 @@ const Home = () => {
             placeholder="Buscar por título o autor..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-4/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
+            className="w-6/12 lg:3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
           />
 
 <select
   value={selectedGenre}
   onChange={(e) => setSelectedGenre(e.target.value)}
-  className="w-3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
+  className="w-6/12 lg:w-3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
 >
   <option value="">Todos los géneros</option>
   {GENRES.map((genre) => (

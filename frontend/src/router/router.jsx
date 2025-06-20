@@ -11,6 +11,7 @@ import MyBooks from '../pages/MyBooks';
 
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import LikedBooks from '../pages/LikedBooks';
 
 const fade = {
   initial: { opacity: 0 },
@@ -85,6 +86,16 @@ export default function Router() {
             <motion.div {...fade}>
               <PrivateRoute>
                 <MyBooks />
+              </PrivateRoute>
+            </motion.div>
+          }
+        />
+        <Route
+          path="/liked-books"
+          element={
+            <motion.div {...fade}>
+              <PrivateRoute>
+                <LikedBooks />
               </PrivateRoute>
             </motion.div>
           }

@@ -1,6 +1,8 @@
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Book = require('../models/book.model');
+const { get } = require('mongoose');
 require('dotenv').config();
 
 async function login (req, res){
@@ -174,12 +176,88 @@ async function updateUserById(req, res) {
   }
 }
 
+async function likeBook(req, res) {
+  const userId = req.user.id;
+  const { bookId } = req.params;
+
+  try {
+    // Verificar que el libro existe
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: 'Libro no encontrado' });
+    }
+
+    // Añadir a likedBooks sin duplicados
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { likedBooks: bookId } },
+      { new: true }
+    ).select('-password');
+
+    return res.status(200).json({
+      message: 'Libro marcado como favorito',
+      likedBooks: user.likedBooks,
+    });
+  } catch (error) {
+    console.error('Error al dar like:', error);
+    res.status(500).json({ message: 'Error al dar like al libro' });
+  }
+}
+
+async function unlikeBook(req, res) {
+  const userId = req.user.id;
+  const { bookId } = req.params;
+
+  try {
+    // Verificar que el libro existe
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: 'Libro no encontrado' });
+    }
+
+    // Quitar el bookId del array
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { likedBooks: bookId } },
+      { new: true }
+    ).select('-password');
+
+    return res.status(200).json({
+      message: 'Libro eliminado de favoritos',
+      likedBooks: user.likedBooks,
+    });
+  } catch (error) {
+    console.error('Error al quitar like:', error);
+    res.status(500).json({ message: 'Error al quitar like al libro' });
+  }
+}
+
+async function getLikedBooks(req, res) {
+  try {
+    const user = await User.findById(req.user.id)
+      .populate('likedBooks')
+      .select('likedBooks');
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    return res.status(200).json(user.likedBooks);
+  } catch (error) {
+    console.error('Error al obtener libros favoritos:', error);
+    res.status(500).json({ message: 'Error al obtener libros favoritos' });
+  }
+}
+
 module.exports = {
     login,
     createUser,
     deleteUserById,
     getUserById,
     getMe,
-    updateUserById
+    updateUserById,
+    likeBook,
+    unlikeBook,
+    getLikedBooks
 }
 

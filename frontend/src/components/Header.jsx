@@ -74,6 +74,12 @@ const Header = () => {
             </button>
             <button
               className="text-[#f4ede0] px-4 py-1 rounded cursor-pointer"
+              onClick={() => navigate('/liked-books')}
+            >
+              Mis favoritos
+            </button>
+            <button
+              className="text-[#f4ede0] px-4 py-1 rounded cursor-pointer"
               onClick={() => navigate('/profile')}
             >
               Mi perfil
@@ -117,6 +123,24 @@ const Header = () => {
                   }}
                 >
                   Subir un libro
+                </button>
+                <button
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    navigate('/my-books');
+                  }}
+                >
+                  Mis libros
+                </button>
+                <button
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    navigate('/liked-books');
+                  }}
+                >
+                  Mis Favoritos
                 </button>
                 <button
                   className="block w-full text-left px-4 py-2 hover:bg-gray-100"
