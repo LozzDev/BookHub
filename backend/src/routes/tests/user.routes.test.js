@@ -5,6 +5,9 @@ const User = require('../../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+// 🔓 Mock auth para rutas protegidas
+jest.mock('../../middleware/auth.middleware', () => (req, res, next) => next());
+
 jest.mock('../../models/user.model');
 jest.mock('bcrypt');
 jest.mock('jsonwebtoken');
@@ -46,22 +49,25 @@ describe('User Routes', () => {
     bcrypt.compare.mockResolvedValue(true);
     jwt.sign.mockReturnValue('mockedtoken');
 
+    // 👇 Añadir cookie manualmente (mock)
+    app.response.cookie = jest.fn();
+
     const res = await request(app).post('/users/login').send({
       email: 'test@test.com',
       password: '1234'
     });
 
     expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual({
-      message: 'login exitoso',
-      token: 'mockedtoken'
-    });
+    expect(res.body.message).toBe('login exitoso');
     expect(User.findOne).toHaveBeenCalledWith({ email: 'test@test.com' });
+    expect(bcrypt.compare).toHaveBeenCalledWith('1234', 'hashedpass');
+    expect(jwt.sign).toHaveBeenCalled();
   });
 
   it('GET /users/:id devuelve usuario si existe', async () => {
     const mockUser = { _id: 'u2', email: 'a@a.com', name: 'Ana' };
-    User.findById.mockReturnValue({ select: jest.fn().mockResolvedValue(mockUser) });
+    const selectMock = jest.fn().mockResolvedValue(mockUser);
+    User.findById.mockReturnValue({ select: selectMock });
 
     const res = await request(app).get('/users/u2');
 

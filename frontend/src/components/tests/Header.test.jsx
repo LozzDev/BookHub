@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, useNavigate } from 'react-router-dom'
 import Header from '../Header'
@@ -16,7 +16,19 @@ describe('Header component', () => {
   const navigateMock = vi.fn()
 
   beforeEach(() => {
+    vi.restoreAllMocks()
     vi.mocked(useNavigate).mockReturnValue(navigateMock)
+
+    // Simulamos que el usuario está autenticado
+    vi.spyOn(global, 'fetch').mockImplementation((url) => {
+      if (url.includes('/users/me')) {
+        return Promise.resolve({ ok: true })  // <- autenticado
+      }
+      return Promise.resolve({
+        ok: true,
+        json: async () => ({ message: 'OK' }),
+      })
+    })
   })
 
   it('renderiza correctamente el texto BookHub', () => {
@@ -34,8 +46,9 @@ describe('Header component', () => {
   it('navega correctamente al hacer click en los botones', async () => {
     render(<Header />, { wrapper: MemoryRouter })
 
-    const uploadButton = screen.getByRole('button', { name: /subir un libro/i })
-    const profileButton = screen.getByRole('button', { name: /mi perfil/i })
+    // Esperamos a que los botones aparezcan tras autenticar
+    const uploadButton = await screen.findByRole('button', { name: /subir un libro/i })
+    const profileButton = await screen.findByRole('button', { name: /mi perfil/i })
 
     await userEvent.click(uploadButton)
     expect(navigateMock).toHaveBeenCalledWith('/book-upload')

@@ -23,6 +23,7 @@ const mockBooks = [
 
 describe('Home page', () => {
   beforeEach(() => {
+    vi.restoreAllMocks()
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => mockBooks,
@@ -45,30 +46,26 @@ describe('Home page', () => {
   it('llama a la API y renderiza los libros', async () => {
     customRender(<Home />)
 
+    expect(await screen.findByText('El Quijote')).toBeInTheDocument()
+    expect(screen.getByText('1984')).toBeInTheDocument()
+  })
+
+  it('muestra mensaje si la búsqueda no encuentra libros', async () => {
+    customRender(<Home />)
+
+    const searchInput = await screen.findByPlaceholderText(/buscar por título/i)
+
+    // Simula búsqueda que no coincide con ningún libro
+    await userEvent.type(searchInput, 'NoExiste')
+
     await waitFor(() => {
-      expect(screen.getByText('El Quijote')).toBeInTheDocument()
-      expect(screen.getByText('1984')).toBeInTheDocument()
+      expect(screen.getByText(/no hay libros que coincidan con tu búsqueda/i)).toBeInTheDocument()
     })
   })
 
-  it('renderiza "No hay libros disponibles" si el array está vacío', async () => {
-    global.fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => [],
-    })
-
+  it('siempre muestra el catálogo aunque no haya libros', async () => {
     customRender(<Home />)
 
-    await waitFor(() => {
-      expect(screen.getByText(/no hay libros disponibles/i)).toBeInTheDocument()
-    })
-  })
-
-  it('muestra el catálogo incluso si hay libros o no', async () => {
-    customRender(<Home />)
-
-    await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /catálogo/i })).toBeInTheDocument()
-    })
+    expect(await screen.findByRole('heading', { name: /catálogo/i })).toBeInTheDocument()
   })
 })

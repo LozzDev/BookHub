@@ -32,9 +32,7 @@ describe('BookDetails page', () => {
   it('renderiza correctamente los datos del libro', async () => {
     customRender()
 
-    await waitFor(() => {
-      expect(screen.getByText(mockBook.title)).toBeInTheDocument()
-    })
+    expect(await screen.findByText(mockBook.title)).toBeInTheDocument()
     expect(screen.getByText(mockBook.author)).toBeInTheDocument()
     expect(screen.getByText(/sinopsis/i)).toBeInTheDocument()
     expect(screen.getByText(mockBook.description)).toBeInTheDocument()
@@ -43,7 +41,7 @@ describe('BookDetails page', () => {
   it('renderiza la imagen de portada', async () => {
     customRender()
 
-    const image = await screen.findByAltText('cover-image')
+    const image = await screen.findByAltText(/portada|cover/i)
     expect(image).toBeInTheDocument()
     expect(image).toHaveAttribute('src', mockBook.coverImage)
   })

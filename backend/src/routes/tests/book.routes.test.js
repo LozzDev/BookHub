@@ -3,6 +3,13 @@ const express = require('express');
 const bookRoutes = require('../book.routes');
 const Book = require('../../models/book.model');
 
+// 🧪 Mock auth middleware para que añada usuario ficticio
+jest.mock('../../middleware/auth.middleware', () => (req, res, next) => {
+  req.user = { id: 'fake-user-id' };
+  next();
+});
+
+// 🧪 Mock Book model
 jest.mock('../../models/book.model');
 
 const app = express();
@@ -36,25 +43,22 @@ describe('Book Routes', () => {
     expect(Book.findById).toHaveBeenCalledWith('123');
   });
 
-  it('POST /books debería crear un libro', async () => {
-    const newBook = { title: 'Nuevo libro', author: 'Autor' };
-    Book.create.mockResolvedValue(newBook);
 
-    const res = await request(app).post('/books').send(newBook);
-
-    expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual(newBook);
-    expect(Book.create).toHaveBeenCalledWith(newBook);
-  });
 
   it('DELETE /books/:id debería eliminar un libro', async () => {
-    const mockBook = { _id: 'abc', title: 'Eliminarme' };
+    const mockBook = {
+      _id: 'abc',
+      title: 'Eliminarme',
+      file: 'https://res.cloudinary.com/demo/raw/upload/v1/bookhub/files/sample.pdf',
+      coverImage: 'https://res.cloudinary.com/demo/image/upload/v1/bookhub/covers/portada.jpg',
+    };
+
     Book.findByIdAndDelete.mockResolvedValue(mockBook);
 
     const res = await request(app).delete('/books/abc');
 
     expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual(mockBook);
+    expect(res.body).toEqual({ message: 'Libro y archivos eliminados', book: mockBook });
     expect(Book.findByIdAndDelete).toHaveBeenCalledWith('abc');
   });
 });

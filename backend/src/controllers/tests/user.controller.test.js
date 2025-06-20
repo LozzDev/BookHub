@@ -21,6 +21,7 @@ describe('User Controller', () => {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
       send: jest.fn(),
+      cookie: jest.fn(), // 🧩 añadimos mock para evitar el TypeError
     };
     jest.clearAllMocks();
   });
@@ -38,11 +39,10 @@ describe('User Controller', () => {
     expect(User.findOne).toHaveBeenCalledWith({ email: 'test@example.com' });
     expect(bcrypt.compare).toHaveBeenCalledWith('1234', 'hashed');
     expect(jwt.sign).toHaveBeenCalled();
+    expect(res.cookie).toHaveBeenCalled(); // verificamos que se llama
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: 'login exitoso', token: 'mockedToken' });
+    expect(res.json).toHaveBeenCalledWith({ message: 'login exitoso' });
   });
-
-
 
   it('deleteUserById elimina un usuario existente', async () => {
     const req = { params: { id: 'abc123' } };
