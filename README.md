@@ -4,7 +4,8 @@
 
 With a user-friendly and functional interface, **BookHub** aims to democratize access to digital reading through a tool built with modern technologies.
 
-![logo]()
+<img src="https://github.com/user-attachments/assets/a6588a8a-3f27-40d2-a7f6-942dc8d57ec1" alt="logo" width="250"/>
+
 
 ---
 
