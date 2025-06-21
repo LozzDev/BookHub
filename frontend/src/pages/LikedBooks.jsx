@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import BookCard from '../components/BookCard';
-
+import Footer from '../components/Footer'
 const LikedBooks = () => {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
@@ -34,9 +34,9 @@ const LikedBooks = () => {
   };
 
   return (
-    <div>
+    <div >
       <Header />
-      <div className="catalog p-5">
+      <div className="catalog p-5 min-h-screen">
         <h2
           className="text-3xl font-semibold mb-4 text-center tracking-widest"
           style={{ textShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)' }}
@@ -62,6 +62,7 @@ const LikedBooks = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BookCard from '../components/BookCard';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-
+import Footer from '../components/Footer'
 const GENRES = [
   { value: 'Fantasy', label: 'Fantasía' },
   { value: 'Science Fiction', label: 'Ciencia Ficción' },
@@ -109,7 +109,7 @@ const Home = () => {
         </div>
       )}
 
-      <div className="catalog p-5">
+      <div className="catalog p-5 min-h-screen">
         <h2
           className="text-3xl font-semibold mb-6 text-center tracking-widest"
           style={{ textShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)' }}
@@ -163,6 +163,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

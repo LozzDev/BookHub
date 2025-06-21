@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-
+import Footer from '../components/Footer'
 const MAX_BOOK_SIZE = 10 * 1024 * 1024; // 10 MB
 const MAX_COVER_SIZE = 5 * 1024 * 1024; // 5 MB
 
@@ -159,6 +159,7 @@ const BookUpload = () => {
           )}
         </form>
       </div>
+      <Footer/>
     </>
   );
 };

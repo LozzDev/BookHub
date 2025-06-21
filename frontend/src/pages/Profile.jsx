@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Swal from 'sweetalert2';
-
+import Footer from '../components/Footer'
 const Profile = () => {
   const [userData, setUserData] = useState({ email: '', name: '' });
   const [editable, setEditable] = useState(false);
@@ -239,6 +239,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

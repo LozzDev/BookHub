@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Swal from 'sweetalert2';
 import ePub from 'epubjs';
+import Footer from '../components/Footer';
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -264,6 +265,7 @@ const BookDetails = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
