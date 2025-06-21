@@ -7,7 +7,7 @@ const {
   updateUserById,
   likeBook,
   unlikeBook,
-  getLikedBooks
+  getLikedBooks,
 } = require('../../controllers/user.controller');
 
 const User = require('../../models/user.model');
@@ -34,7 +34,11 @@ describe('User Controller', () => {
 
   it('login devuelve token si credenciales son correctas', async () => {
     const req = { body: { email: 'test@example.com', password: '1234' } };
-    const mockUser = { _id: 'abc123', email: 'test@example.com', password: 'hashed' };
+    const mockUser = {
+      _id: 'abc123',
+      email: 'test@example.com',
+      password: 'hashed',
+    };
 
     User.findOne.mockResolvedValue(mockUser);
     bcrypt.compare.mockResolvedValue(true);
@@ -63,7 +67,11 @@ describe('User Controller', () => {
 
   it('login devuelve 401 si contraseña es incorrecta', async () => {
     const req = { body: { email: 'test@example.com', password: 'wrong' } };
-    const mockUser = { _id: 'abc123', email: 'test@example.com', password: 'hashed' };
+    const mockUser = {
+      _id: 'abc123',
+      email: 'test@example.com',
+      password: 'hashed',
+    };
 
     User.findOne.mockResolvedValue(mockUser);
     bcrypt.compare.mockResolvedValue(false);
@@ -75,7 +83,9 @@ describe('User Controller', () => {
   });
 
   it('createUser crea nuevo usuario si no existe', async () => {
-    const req = { body: { email: 'nuevo@user.com', password: '1234', name: 'Nuevo' } };
+    const req = {
+      body: { email: 'nuevo@user.com', password: '1234', name: 'Nuevo' },
+    };
     const mockHashed = 'hashed123';
     const mockCreatedUser = {
       _id: 'newid',
@@ -127,7 +137,11 @@ describe('User Controller', () => {
 
   it('getUserById devuelve usuario si existe', async () => {
     const req = { params: { id: 'user123' } };
-    const mockUser = { _id: 'user123', email: 'user@test.com', name: 'Usuario' };
+    const mockUser = {
+      _id: 'user123',
+      email: 'user@test.com',
+      name: 'Usuario',
+    };
 
     const selectMock = jest.fn().mockResolvedValue(mockUser);
     User.findById.mockReturnValue({ select: selectMock });
@@ -158,7 +172,9 @@ describe('User Controller', () => {
     const req = { user: { id: 'user123' } };
     const mockUser = { _id: 'user123', email: 'me@example.com', name: 'Yo' };
 
-    User.findById.mockReturnValue({ select: jest.fn().mockResolvedValue(mockUser) });
+    User.findById.mockReturnValue({
+      select: jest.fn().mockResolvedValue(mockUser),
+    });
 
     await getMe(req, res);
 
@@ -198,59 +214,57 @@ describe('User Controller', () => {
     });
   });
 
-it('likeBook agrega un libro a favoritos si no existe', async () => {
-  const req = { user: { id: 'user123' }, params: { bookId: 'book456' } };
-  const mockBook = { _id: 'book456' };
-  const mockUser = { likedBooks: ['book456'] };
+  it('likeBook agrega un libro a favoritos si no existe', async () => {
+    const req = { user: { id: 'user123' }, params: { bookId: 'book456' } };
+    const mockBook = { _id: 'book456' };
+    const mockUser = { likedBooks: ['book456'] };
 
-  Book.findById.mockResolvedValue(mockBook);
+    Book.findById.mockResolvedValue(mockBook);
 
-  User.findByIdAndUpdate.mockReturnValue({
-    select: jest.fn().mockResolvedValue(mockUser),
+    User.findByIdAndUpdate.mockReturnValue({
+      select: jest.fn().mockResolvedValue(mockUser),
+    });
+
+    await likeBook(req, res);
+
+    expect(Book.findById).toHaveBeenCalledWith('book456');
+    expect(User.findByIdAndUpdate).toHaveBeenCalledWith(
+      'user123',
+      { $addToSet: { likedBooks: 'book456' } },
+      { new: true }
+    );
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'Libro marcado como favorito',
+      likedBooks: ['book456'],
+    });
   });
-
-  await likeBook(req, res);
-
-  expect(Book.findById).toHaveBeenCalledWith('book456');
-  expect(User.findByIdAndUpdate).toHaveBeenCalledWith(
-    'user123',
-    { $addToSet: { likedBooks: 'book456' } },
-    { new: true }
-  );
-  expect(res.status).toHaveBeenCalledWith(200);
-  expect(res.json).toHaveBeenCalledWith({
-    message: 'Libro marcado como favorito',
-    likedBooks: ['book456'],
-  });
-});
-
 
   it('unlikeBook elimina un libro de favoritos', async () => {
-  const req = { user: { id: 'user123' }, params: { bookId: 'book456' } };
-  const mockBook = { _id: 'book456' };
-  const mockUser = { likedBooks: [] };
+    const req = { user: { id: 'user123' }, params: { bookId: 'book456' } };
+    const mockBook = { _id: 'book456' };
+    const mockUser = { likedBooks: [] };
 
-  Book.findById.mockResolvedValue(mockBook);
+    Book.findById.mockResolvedValue(mockBook);
 
-  User.findByIdAndUpdate.mockReturnValue({
-    select: jest.fn().mockResolvedValue(mockUser),
+    User.findByIdAndUpdate.mockReturnValue({
+      select: jest.fn().mockResolvedValue(mockUser),
+    });
+
+    await unlikeBook(req, res);
+
+    expect(Book.findById).toHaveBeenCalledWith('book456');
+    expect(User.findByIdAndUpdate).toHaveBeenCalledWith(
+      'user123',
+      { $pull: { likedBooks: 'book456' } },
+      { new: true }
+    );
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'Libro eliminado de favoritos',
+      likedBooks: [],
+    });
   });
-
-  await unlikeBook(req, res);
-
-  expect(Book.findById).toHaveBeenCalledWith('book456');
-  expect(User.findByIdAndUpdate).toHaveBeenCalledWith(
-    'user123',
-    { $pull: { likedBooks: 'book456' } },
-    { new: true }
-  );
-  expect(res.status).toHaveBeenCalledWith(200);
-  expect(res.json).toHaveBeenCalledWith({
-    message: 'Libro eliminado de favoritos',
-    likedBooks: [],
-  });
-});
-
 
   it('getLikedBooks devuelve libros favoritos del usuario', async () => {
     const req = { user: { id: 'user123' } };

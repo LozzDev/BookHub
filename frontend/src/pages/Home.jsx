@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BookCard from '../components/BookCard';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 const GENRES = [
   { value: 'Fantasy', label: 'Fantasía' },
   { value: 'Science Fiction', label: 'Ciencia Ficción' },
@@ -49,7 +49,7 @@ const Home = () => {
     const checkAuth = async () => {
       try {
         const res = await fetch('http://localhost:3000/bookhub/users/me', {
-          credentials: 'include'
+          credentials: 'include',
         });
         setIsAuthenticated(res.ok);
       } catch {
@@ -95,7 +95,9 @@ const Home = () => {
             >
               BOOKHUB
             </h1>
-            <p className="text-lg mb-4 font-medium">Lee, descarga y disfruta.</p>
+            <p className="text-lg mb-4 font-medium">
+              Lee, descarga y disfruta.
+            </p>
             <button
               className="bg-black text-white px-8 py-1 rounded-full hover:bg-gray-900 transition cursor-pointer"
               onClick={() => navigate('/register')}
@@ -104,7 +106,10 @@ const Home = () => {
             </button>
           </div>
           <div>
-            <img src="https://res.cloudinary.com/dc732dg4w/image/upload/v1750460455/book_g7cpsp.png" width={712} />
+            <img
+              src="https://res.cloudinary.com/dc732dg4w/image/upload/v1750460455/book_g7cpsp.png"
+              width={712}
+            />
           </div>
         </div>
       )}
@@ -117,33 +122,29 @@ const Home = () => {
           CATÁLOGO
         </h2>
 
-        {/* Filtros */}
-        
-
-        {/* Lista de libros */}
         <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row  gap-4 items-center mb-10 w-full max-w-screen-lg ">
-          <input
-            type="text"
-            placeholder="Buscar por título o autor..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-6/12 lg:3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
-          />
+            <input
+              type="text"
+              placeholder="Buscar por título o autor..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-6/12 lg:3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
+            />
 
-<select
-  value={selectedGenre}
-  onChange={(e) => setSelectedGenre(e.target.value)}
-  className="w-6/12 lg:w-3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
->
-  <option value="">Todos los géneros</option>
-  {GENRES.map((genre) => (
-    <option key={genre.value} value={genre.value}>
-      {genre.label}
-    </option>
-  ))}
-</select>
-        </div>
+            <select
+              value={selectedGenre}
+              onChange={(e) => setSelectedGenre(e.target.value)}
+              className="w-6/12 lg:w-3/12 px-4 py-2 rounded-xl shadow-lg bg-white focus:outline-none"
+            >
+              <option value="">Todos los géneros</option>
+              {GENRES.map((genre) => (
+                <option key={genre.value} value={genre.value}>
+                  {genre.label}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="grid gap-9 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] justify-items-center">
             {filteredBooks.length > 0 ? (
               filteredBooks.map((book) => (
@@ -163,7 +164,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

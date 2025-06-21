@@ -15,7 +15,9 @@ jest.mock('fs', () => ({
 jest.mock('../../config/cloudinary', () => ({
   cloudinary: {
     uploader: {
-      upload: jest.fn().mockResolvedValue({ secure_url: 'https://cloudinary.com/fake' }),
+      upload: jest
+        .fn()
+        .mockResolvedValue({ secure_url: 'https://cloudinary.com/fake' }),
       destroy: jest.fn().mockResolvedValue({ result: 'ok' }),
     },
   },
@@ -80,7 +82,9 @@ describe('Book Controller', () => {
 
     await createBook(mockReq, res);
 
-    expect(Book.create).toHaveBeenCalledWith(expect.objectContaining({ title: 'Nuevo Libro' }));
+    expect(Book.create).toHaveBeenCalledWith(
+      expect.objectContaining({ title: 'Nuevo Libro' })
+    );
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(mockBook);
   });
@@ -90,7 +94,8 @@ describe('Book Controller', () => {
       _id: '1',
       title: 'Eliminarme',
       file: 'https://res.cloudinary.com/demo/raw/upload/v1/bookhub/files/testfile.pdf',
-      coverImage: 'https://res.cloudinary.com/demo/image/upload/v1/bookhub/covers/testcover.jpg',
+      coverImage:
+        'https://res.cloudinary.com/demo/image/upload/v1/bookhub/covers/testcover.jpg',
     };
     const req = { params: { id: '1' } };
     Book.findByIdAndDelete.mockResolvedValue(mockBook);

@@ -2,7 +2,7 @@ const Book = require('../book.model');
 
 describe('Modelo Book - validaciones', () => {
   it('falla si faltan campos obligatorios', async () => {
-    const book = new Book({}); 
+    const book = new Book({});
 
     let error;
     try {
@@ -25,7 +25,7 @@ describe('Modelo Book - validaciones', () => {
       title: 'Test',
       author: 'Autor',
       description: 'Desc',
-      genre: 'Comedia', 
+      genre: 'Comedia',
       coverImage: 'img.jpg',
       file: 'libro.pdf',
       fileType: 'PDF',
@@ -34,7 +34,7 @@ describe('Modelo Book - validaciones', () => {
     await expect(book.validate()).rejects.toThrow();
   });
 
-  it('falla si fileType no es PDF o EPUB', async () => {
+  it('falla si fileType no es EPUB', async () => {
     const book = new Book({
       title: 'Test',
       author: 'Autor',
@@ -42,7 +42,7 @@ describe('Modelo Book - validaciones', () => {
       genre: 'Drama',
       coverImage: 'img.jpg',
       file: 'libro.txt',
-      fileType: 'TXT', 
+      fileType: 'TXT',
     });
 
     await expect(book.validate()).rejects.toThrow();
@@ -55,9 +55,9 @@ describe('Modelo Book - validaciones', () => {
       description: 'Descripción del libro',
       genre: 'Fantasy',
       coverImage: 'https://portada.jpg',
-      file: 'libro.pdf',
-      fileType: 'PDF',
-      userId: 'usuario123'
+      file: 'libro.epub',
+      fileType: 'EPUB',
+      userId: 'usuario123',
     });
 
     await expect(book.validate()).resolves.toBeUndefined();

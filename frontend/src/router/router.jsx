@@ -28,7 +28,11 @@ export default function Router() {
       <Routes location={location} key={location.pathname}>
         <Route
           path="/"
-          element={<motion.div {...fade}><Home /></motion.div>}
+          element={
+            <motion.div {...fade}>
+              <Home />
+            </motion.div>
+          }
         />
         <Route
           path="/register"

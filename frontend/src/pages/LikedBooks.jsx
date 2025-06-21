@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import BookCard from '../components/BookCard';
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 const LikedBooks = () => {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
@@ -10,15 +10,21 @@ const LikedBooks = () => {
   useEffect(() => {
     const fetchLikedBooks = async () => {
       try {
-        const response = await fetch('http://localhost:3000/bookhub/users/me/liked-books', {
-          credentials: 'include', // 🔐 Importante para que se envíe la cookie con el token
-        });
+        const response = await fetch(
+          'http://localhost:3000/bookhub/users/me/liked-books',
+          {
+            credentials: 'include',
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
           setBooks(data);
         } else {
-          console.error('Error obteniendo los libros favoritos:', response.statusText);
+          console.error(
+            'Error obteniendo los libros favoritos:',
+            response.statusText
+          );
         }
       } catch (error) {
         console.error('Error obteniendo los libros favoritos:', error);
@@ -34,7 +40,7 @@ const LikedBooks = () => {
   };
 
   return (
-    <div >
+    <div>
       <Header />
       <div className="catalog p-5 min-h-screen">
         <h2
@@ -57,12 +63,14 @@ const LikedBooks = () => {
                 />
               ))
             ) : (
-              <p className="col-span-full text-center text-gray-500">No hay libros favoritos.</p>
+              <p className="col-span-full text-center text-gray-500">
+                No hay libros favoritos.
+              </p>
             )}
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 const Profile = () => {
   const [userData, setUserData] = useState({ email: '', name: '' });
   const [editable, setEditable] = useState(false);
@@ -43,7 +43,11 @@ const Profile = () => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      Swal.fire('Email inválido', 'Introduce un email con formato válido.', 'warning');
+      Swal.fire(
+        'Email inválido',
+        'Introduce un email con formato válido.',
+        'warning'
+      );
       return;
     }
 
@@ -64,15 +68,22 @@ const Profile = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/bookhub/users/${userData._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `http://localhost:3000/bookhub/users/${userData._id}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (res.ok) {
-        Swal.fire('Actualizado', 'Tu perfil ha sido actualizado con éxito.', 'success');
+        Swal.fire(
+          'Actualizado',
+          'Tu perfil ha sido actualizado con éxito.',
+          'success'
+        );
         setEditable(false);
         setUserData((prev) => ({
           ...prev,
@@ -92,17 +103,29 @@ const Profile = () => {
     e.preventDefault();
 
     if (!passwordData.currentPassword || !passwordData.newPassword) {
-      Swal.fire('Campos incompletos', 'Completa ambos campos de contraseña.', 'warning');
+      Swal.fire(
+        'Campos incompletos',
+        'Completa ambos campos de contraseña.',
+        'warning'
+      );
       return;
     }
 
     if (passwordData.newPassword.length < 8) {
-      Swal.fire('Contraseña débil', 'La nueva contraseña debe tener al menos 8 caracteres.', 'warning');
+      Swal.fire(
+        'Contraseña débil',
+        'La nueva contraseña debe tener al menos 8 caracteres.',
+        'warning'
+      );
       return;
     }
 
     if (passwordData.newPassword === passwordData.currentPassword) {
-      Swal.fire('Inválido', 'La nueva contraseña no puede ser igual a la actual.', 'warning');
+      Swal.fire(
+        'Inválido',
+        'La nueva contraseña no puede ser igual a la actual.',
+        'warning'
+      );
       return;
     }
 
@@ -118,23 +141,34 @@ const Profile = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/bookhub/users/${userData._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          password: passwordData.newPassword,
-          currentPassword: passwordData.currentPassword,
-        }),
-      });
+      const res = await fetch(
+        `http://localhost:3000/bookhub/users/${userData._id}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            password: passwordData.newPassword,
+            currentPassword: passwordData.currentPassword,
+          }),
+        }
+      );
 
       const data = await res.json();
 
       if (res.ok) {
-        Swal.fire('Contraseña actualizada', 'Tu nueva contraseña ha sido guardada.', 'success');
+        Swal.fire(
+          'Contraseña actualizada',
+          'Tu nueva contraseña ha sido guardada.',
+          'success'
+        );
         setPasswordData({ currentPassword: '', newPassword: '' });
       } else {
-        Swal.fire('Error', data.message || 'No se pudo actualizar la contraseña.', 'error');
+        Swal.fire(
+          'Error',
+          data.message || 'No se pudo actualizar la contraseña.',
+          'error'
+        );
       }
     } catch (err) {
       console.error(err);
@@ -156,11 +190,14 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-col w-full max-w-md gap-10">
-          {/* Sección info personal */}
           <div className="bg-black/20 rounded-2xl p-6 shadow-2xl">
-            <h2 className="text-2xl font-semibold text-center mb-4 text-black">Mis datos</h2>
+            <h2 className="text-2xl font-semibold text-center mb-4 text-black">
+              Mis datos
+            </h2>
             <form className="flex flex-col gap-3" onSubmit={handleUpdateInfo}>
-              <label htmlFor="email" className="text-black">Email</label>
+              <label htmlFor="email" className="text-black">
+                Email
+              </label>
               <input
                 id="email"
                 type="email"
@@ -171,7 +208,9 @@ const Profile = () => {
                 required
               />
 
-              <label htmlFor="name" className="text-black">Usuario</label>
+              <label htmlFor="name" className="text-black">
+                Usuario
+              </label>
               <input
                 id="name"
                 type="text"
@@ -205,11 +244,17 @@ const Profile = () => {
             )}
           </div>
 
-          {/* Sección cambiar contraseña */}
           <div className="bg-black/20 rounded-2xl p-6 shadow-2xl">
-            <h2 className="text-2xl font-semibold text-center mb-4 text-black">Cambiar contraseña</h2>
-            <form className="flex flex-col gap-3" onSubmit={handleUpdatePassword}>
-              <label htmlFor="currentPassword" className="text-black">Contraseña actual</label>
+            <h2 className="text-2xl font-semibold text-center mb-4 text-black">
+              Cambiar contraseña
+            </h2>
+            <form
+              className="flex flex-col gap-3"
+              onSubmit={handleUpdatePassword}
+            >
+              <label htmlFor="currentPassword" className="text-black">
+                Contraseña actual
+              </label>
               <input
                 id="currentPassword"
                 type="password"
@@ -219,7 +264,9 @@ const Profile = () => {
                 required
               />
 
-              <label htmlFor="newPassword" className="text-black">Nueva contraseña</label>
+              <label htmlFor="newPassword" className="text-black">
+                Nueva contraseña
+              </label>
               <input
                 id="newPassword"
                 type="password"
@@ -239,7 +286,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

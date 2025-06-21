@@ -5,7 +5,6 @@ const User = require('../../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// 🔓 Mock auth para rutas protegidas
 jest.mock('../../middleware/auth.middleware', () => (req, res, next) => next());
 
 jest.mock('../../models/user.model');
@@ -26,35 +25,40 @@ describe('User Routes', () => {
     bcrypt.hash.mockResolvedValue('hashedpass');
     User.mockImplementation(() => ({
       save: jest.fn().mockResolvedValue(),
-      name: 'Nuevo'
+      name: 'Nuevo',
     }));
 
     const res = await request(app).post('/users').send({
       email: 'nuevo@test.com',
       password: '123456',
-      name: 'Nuevo'
+      name: 'Nuevo',
     });
 
     expect(res.statusCode).toBe(201);
-    expect(res.body).toEqual(expect.objectContaining({
-      message: 'Usuario creado correctamente',
-      user: 'Nuevo'
-    }));
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        message: 'Usuario creado correctamente',
+        user: 'Nuevo',
+      })
+    );
     expect(User.findOne).toHaveBeenCalledWith({ email: 'nuevo@test.com' });
   });
 
   it('POST /users/login devuelve token si las credenciales son correctas', async () => {
-    const mockUser = { _id: 'u1', email: 'test@test.com', password: 'hashedpass' };
+    const mockUser = {
+      _id: 'u1',
+      email: 'test@test.com',
+      password: 'hashedpass',
+    };
     User.findOne.mockResolvedValue(mockUser);
     bcrypt.compare.mockResolvedValue(true);
     jwt.sign.mockReturnValue('mockedtoken');
 
-    // 👇 Añadir cookie manualmente (mock)
     app.response.cookie = jest.fn();
 
     const res = await request(app).post('/users/login').send({
       email: 'test@test.com',
-      password: '1234'
+      password: '1234',
     });
 
     expect(res.statusCode).toBe(200);

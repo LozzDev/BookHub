@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer'
-const MAX_BOOK_SIZE = 10 * 1024 * 1024; // 10 MB
-const MAX_COVER_SIZE = 5 * 1024 * 1024; // 5 MB
+import Footer from '../components/Footer';
+
+const MAX_BOOK_SIZE = 10 * 1024 * 1024;
+const MAX_COVER_SIZE = 5 * 1024 * 1024;
 
 const BookUpload = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ const BookUpload = () => {
 
   const [successMessage, setSuccessMessage] = useState('');
   const [redirecting, setRedirecting] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // 🔄 nuevo estado
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, type, value, files } = e.target;
@@ -43,24 +44,24 @@ const BookUpload = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Mostrar spinner
+    setIsLoading(true);
 
     try {
       if (!formData.file || !formData.coverImage) {
-        alert('Debes seleccionar un archivo PDF/EPUB y una imagen de portada.');
+        alert('Debes seleccionar un archivo EPUB y una imagen de portada.');
         setIsLoading(false);
         return;
       }
 
       const extension = formData.file.name.split('.').pop().toLowerCase();
-      const validTypes = ['pdf', 'epub'];
+      const validTypes = ['epub'];
       if (!validTypes.includes(extension)) {
-        alert('Formato no válido. Solo se aceptan PDF o EPUB.');
+        alert('Formato no válido. Solo se aceptan archivos EPUB.');
         setIsLoading(false);
         return;
       }
 
-      const fileType = extension === 'pdf' ? 'PDF' : 'EPUB';
+      const fileType = 'EPUB';
 
       const form = new FormData();
       form.append('title', formData.title);
@@ -104,7 +105,7 @@ const BookUpload = () => {
       console.error('❌ Error al subir el libro:', error.message);
       alert(`Error al subir el libro: ${error.message}`);
     } finally {
-      setIsLoading(false); // Ocultar spinner
+      setIsLoading(false);
     }
   };
 
@@ -112,17 +113,51 @@ const BookUpload = () => {
     <>
       <Header />
       <div className="min-h-screen flex items-center justify-center px-4">
-        <form onSubmit={handleSubmit} className="bg-black/20 p-8 rounded-xl shadow-lg w-full max-w-md">
-          <h2 className="text-center text-xl font-semibold mb-6">¡Sube tu libro!</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="bg-black/20 p-8 rounded-xl shadow-lg w-full max-w-md"
+        >
+          <h2 className="text-center text-xl font-semibold mb-6">
+            ¡Sube tu libro!
+          </h2>
 
-          <label htmlFor="title" className="block mb-2 text-sm">Título</label>
-          <input id="title" name="title" type="text" value={formData.title} onChange={handleChange} className="w-full px-4 py-2 mb-4 rounded-full border-none focus:outline-none bg-white" required />
+          <label htmlFor="title" className="block mb-2 text-sm">
+            Título
+          </label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            value={formData.title}
+            onChange={handleChange}
+            className="w-full px-4 py-2 mb-4 rounded-full border-none focus:outline-none bg-white"
+            required
+          />
 
-          <label htmlFor="author" className="block mb-2 text-sm">Autor/Autora</label>
-          <input id="author" name="author" type="text" value={formData.author} onChange={handleChange} className="w-full px-4 py-2 mb-4 rounded-full border-none focus:outline-none bg-white" required />
+          <label htmlFor="author" className="block mb-2 text-sm">
+            Autor/Autora
+          </label>
+          <input
+            id="author"
+            name="author"
+            type="text"
+            value={formData.author}
+            onChange={handleChange}
+            className="w-full px-4 py-2 mb-4 rounded-full border-none focus:outline-none bg-white"
+            required
+          />
 
-          <label htmlFor="genre" className="block mb-2 text-sm">Género</label>
-          <select id="genre" name="genre" value={formData.genre} onChange={handleChange} className="w-full px-4 py-2 mb-4 rounded-full border-none focus:outline-none bg-white" required>
+          <label htmlFor="genre" className="block mb-2 text-sm">
+            Género
+          </label>
+          <select
+            id="genre"
+            name="genre"
+            value={formData.genre}
+            onChange={handleChange}
+            className="w-full px-4 py-2 mb-4 rounded-full border-none focus:outline-none bg-white"
+            required
+          >
             <option value="">Selecciona un género</option>
             <option value="Fantasy">Fantasía</option>
             <option value="Science Fiction">Ciencia ficción</option>
@@ -138,28 +173,64 @@ const BookUpload = () => {
             <option value="Poetry">Poesía</option>
           </select>
 
-          <label htmlFor="description" className="block mb-2 text-sm">Sinopsis</label>
-          <textarea id="description" name="description" value={formData.description} onChange={handleChange} rows="4" className="w-full p-3 mb-4 rounded-lg border-none focus:outline-none bg-white" required />
+          <label htmlFor="description" className="block mb-2 text-sm">
+            Sinopsis
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            rows="4"
+            className="w-full p-3 mb-4 rounded-lg border-none focus:outline-none bg-white"
+            required
+          />
 
-          <label htmlFor="coverImage" className="block mb-2 text-sm">Imagen de portada (máx. 5MB)</label>
-          <input id="coverImage" name="coverImage" type="file" accept="image/*" onChange={handleChange} className="w-full p-2 mb-6 rounded-lg bg-white text-sm" required />
+          <label htmlFor="coverImage" className="block mb-2 text-sm">
+            Imagen de portada (máx. 5MB)
+          </label>
+          <input
+            id="coverImage"
+            name="coverImage"
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+            className="w-full p-2 mb-6 rounded-lg bg-white text-sm"
+            required
+          />
 
-          <label htmlFor="file" className="block mb-2 text-sm">Archivo libro (PDF o EPUB máx. 10MB)</label>
-          <input id="file" name="file" type="file" accept=".pdf,.epub" onChange={handleChange} className="w-full p-2 mb-6 rounded-lg bg-white text-sm" required />
+          <label htmlFor="file" className="block mb-2 text-sm">
+            Archivo libro (solo EPUB, máx. 10MB)
+          </label>
+          <input
+            id="file"
+            name="file"
+            type="file"
+            accept=".epub"
+            onChange={handleChange}
+            className="w-full p-2 mb-6 rounded-lg bg-white text-sm"
+            required
+          />
 
           <div className="flex justify-center">
-            <button type="submit" disabled={isLoading} className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-all flex items-center gap-2">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-all flex items-center gap-2"
+            >
               {isLoading ? 'Subiendo...' : 'Subir'}
               {isLoading && <span className="animate-spin">🔄</span>}
             </button>
           </div>
 
           {successMessage && (
-            <p className="mt-4 text-green-600 text-sm text-center">{successMessage}</p>
+            <p className="mt-4 text-green-600 text-sm text-center">
+              {successMessage}
+            </p>
           )}
         </form>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

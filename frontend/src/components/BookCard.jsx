@@ -2,16 +2,22 @@ const BookCard = ({ image, title, author, onDetailsClick }) => {
   return (
     <div className="book-card bg-black/30 rounded-3xl shadow-lg p-2 w-58 flex flex-col items-center gap-2 transition-transform h-full">
       <div className="book-image-container w-full h-40 overflow-hidden rounded-2xl">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
+        <img src={image} alt={title} className="w-full h-full object-cover" />
       </div>
       <div className="book-info w-full flex items-center gap-6 justify-center">
         <div className="max-w-[6rem]">
-          <p className="book-title text-md font-semibold truncate" title={title}>{title}</p>
-          <p className="book-author text-sm text-gray-600 truncate" title={author}>{author}</p>
+          <p
+            className="book-title text-md font-semibold truncate"
+            title={title}
+          >
+            {title}
+          </p>
+          <p
+            className="book-author text-sm text-gray-600 truncate"
+            title={author}
+          >
+            {author}
+          </p>
         </div>
         <button
           onClick={onDetailsClick}
@@ -25,4 +31,3 @@ const BookCard = ({ image, title, author, onDetailsClick }) => {
 };
 
 export default BookCard;
-

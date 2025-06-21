@@ -43,14 +43,13 @@ describe('Book Routes', () => {
     expect(Book.findById).toHaveBeenCalledWith('123');
   });
 
-
-
   it('DELETE /books/:id debería eliminar un libro', async () => {
     const mockBook = {
       _id: 'abc',
       title: 'Eliminarme',
       file: 'https://res.cloudinary.com/demo/raw/upload/v1/bookhub/files/sample.pdf',
-      coverImage: 'https://res.cloudinary.com/demo/image/upload/v1/bookhub/covers/portada.jpg',
+      coverImage:
+        'https://res.cloudinary.com/demo/image/upload/v1/bookhub/covers/portada.jpg',
     };
 
     Book.findByIdAndDelete.mockResolvedValue(mockBook);
@@ -58,7 +57,10 @@ describe('Book Routes', () => {
     const res = await request(app).delete('/books/abc');
 
     expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual({ message: 'Libro y archivos eliminados', book: mockBook });
+    expect(res.body).toEqual({
+      message: 'Libro y archivos eliminados',
+      book: mockBook,
+    });
     expect(Book.findByIdAndDelete).toHaveBeenCalledWith('abc');
   });
 });

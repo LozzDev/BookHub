@@ -15,13 +15,16 @@ const BookDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/bookhub/books/${id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
+        const response = await fetch(
+          `http://localhost:3000/bookhub/books/${id}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -42,7 +45,6 @@ const BookDetails = () => {
             setLiked(true);
           }
         }
-
       } catch (error) {
         console.error('Error al obtener el libro o el usuario:', error);
       }
@@ -54,10 +56,13 @@ const BookDetails = () => {
   const toggleLike = async () => {
     try {
       const method = liked ? 'DELETE' : 'POST';
-      const response = await fetch(`http://localhost:3000/bookhub/users/me/${liked ? 'unlike' : 'like'}/${id}`, {
-        method,
-        credentials: 'include',
-      });
+      const response = await fetch(
+        `http://localhost:3000/bookhub/users/me/${liked ? 'unlike' : 'like'}/${id}`,
+        {
+          method,
+          credentials: 'include',
+        }
+      );
 
       if (response.ok) {
         setLiked(!liked);
@@ -141,32 +146,40 @@ const BookDetails = () => {
 
           rendition.display();
 
-          // Botones navegación
-          document.getElementById('prev-page')?.addEventListener('click', () => {
-            rendition.prev();
-          });
+          document
+            .getElementById('prev-page')
+            ?.addEventListener('click', () => {
+              rendition.prev();
+            });
 
-          document.getElementById('next-page')?.addEventListener('click', () => {
-            rendition.next();
-          });
+          document
+            .getElementById('next-page')
+            ?.addEventListener('click', () => {
+              rendition.next();
+            });
 
-          // Progreso
           bookInstance.ready.then(() => {
             bookInstance.locations.generate(1000).then(() => {
               rendition.on('relocated', (location) => {
-                const percent = bookInstance.locations.percentageFromCfi(location.start.cfi);
+                const percent = bookInstance.locations.percentageFromCfi(
+                  location.start.cfi
+                );
                 const progressText = `${Math.round(percent * 100)}% leído`;
                 const progressElement = document.getElementById('progress');
                 if (progressElement) progressElement.textContent = progressText;
               });
             });
           });
-        }
+        },
       });
     } else if (fileType === 'pdf') {
       window.open(book.file, '_blank');
     } else {
-      Swal.fire('Error', 'Formato no soportado para lectura en línea.', 'error');
+      Swal.fire(
+        'Error',
+        'Formato no soportado para lectura en línea.',
+        'error'
+      );
     }
   };
 
@@ -185,34 +198,52 @@ const BookDetails = () => {
 
           <div className="w-full flex flex-col items-center h-[650px] lg:h-[750px] justify-between">
             <div className="flex flex-col p-6 w-11/12 bg-black/20 rounded-3xl items-center h-[85%]">
-            <h1 className="text-3xl font-bold text-center">{book.title}</h1>
-            <p className="text-sm mb-4 text-center">{book.author}</p>
+              <h1 className="text-3xl font-bold text-center">{book.title}</h1>
+              <p className="text-sm mb-4 text-center">{book.author}</p>
               <div className="flex items-center gap-3 mb-2 justify-center flex-wrap">
-                
                 {currentUser && (
-                  <button onClick={toggleLike} className="focus:outline-none" aria-label="Dar like">
+                  <button
+                    onClick={toggleLike}
+                    className="focus:outline-none"
+                    aria-label="Dar like"
+                  >
                     {liked ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 text-red-600 hover:scale-110 transition-transform cursor-pointer" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-7 h-7 text-red-600 hover:scale-110 transition-transform cursor-pointer"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
                         2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 
                         2.09C13.09 3.81 14.76 3 16.5 
                         3 19.58 3 22 5.42 22 8.5c0 
-                        3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                        />
                       </svg>
                     ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 text-black hover:scale-110 transition-transform cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path d="M12 21.35l-1.45-1.32C5.4 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-7 h-7 text-black hover:scale-110 transition-transform cursor-pointer"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 
                           15.36 2 12.28 2 8.5 2 5.42 4.42 
                           3 7.5 3c1.74 0 3.41 0.81 4.5 
                           2.09C13.09 3.81 14.76 3 16.5 
                           3 19.58 3 22 5.42 22 8.5c0 
-                          3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                          3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                        />
                       </svg>
                     )}
                   </button>
                 )}
               </div>
-              
 
               <h2 className="text-xl font-semibold mb-2">Sinopsis</h2>
               <div className="overflow-y-auto max-h-[400px] lg:max-h-[500px] w-full px-2 overflow-x-hidden">
@@ -228,7 +259,8 @@ const BookDetails = () => {
                   try {
                     const response = await fetch(book.file);
                     const blob = await response.blob();
-                    const extension = book.fileType?.toLowerCase() === 'pdf' ? 'pdf' : 'epub';
+                    const extension =
+                      book.fileType?.toLowerCase() === 'pdf' ? 'pdf' : 'epub';
                     const filename = `${book.title?.replace(/\s+/g, '_') || 'libro'}.${extension}`;
 
                     const link = document.createElement('a');
@@ -238,7 +270,10 @@ const BookDetails = () => {
                     link.click();
                     link.remove();
                   } catch (error) {
-                    console.error('❌ Error al descargar el archivo:', error.message);
+                    console.error(
+                      '❌ Error al descargar el archivo:',
+                      error.message
+                    );
                   }
                 }}
                 className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition-all cursor-pointer"
@@ -265,7 +300,7 @@ const BookDetails = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -8,7 +8,7 @@ const PublicRoute = ({ children }) => {
     const checkAuth = async () => {
       try {
         const res = await fetch('http://localhost:3000/bookhub/users/me', {
-          credentials: 'include'
+          credentials: 'include',
         });
         setIsAuthenticated(res.ok);
       } catch (error) {

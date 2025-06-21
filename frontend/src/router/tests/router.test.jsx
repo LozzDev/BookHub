@@ -1,14 +1,12 @@
-// src/router/tests/router.test.jsx
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Router from '../router';
 
-// Mock de sesión para rutas privadas
 vi.mock('../../context/SessionContext', () => ({
   useSession: () => ({
     isAuthenticated: true,
-    user: { id: 'mock-user' }
+    user: { id: 'mock-user' },
   }),
 }));
 

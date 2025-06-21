@@ -3,7 +3,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MyBooks from '../MyBooks';
 
-// 🧪 mock useNavigate
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
@@ -12,7 +11,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// 🧪 mock Header y BookCard con contenido visible
 vi.mock('../../components/Header', () => ({
   default: () => <div data-testid="mock-header">MockHeader</div>,
 }));
@@ -54,7 +52,9 @@ describe('MyBooks', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('No hay libros disponibles.')).toBeInTheDocument();
+      expect(
+        screen.getByText('No hay libros disponibles.')
+      ).toBeInTheDocument();
     });
   });
 
@@ -94,7 +94,10 @@ describe('MyBooks', () => {
     );
 
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('error obteniendo los libros:', 'Unauthorized');
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'error obteniendo los libros:',
+        'Unauthorized'
+      );
     });
 
     consoleSpy.mockRestore();

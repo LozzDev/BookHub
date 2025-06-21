@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import BookCard from '../components/BookCard';
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 const MyBooks = () => {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
@@ -10,9 +10,12 @@ const MyBooks = () => {
   useEffect(() => {
     const fetchMyBooks = async () => {
       try {
-        const response = await fetch('http://localhost:3000/bookhub/books/mine', {
-          credentials: 'include', // 🔐 Importante para que se envíe la cookie con el token
-        });
+        const response = await fetch(
+          'http://localhost:3000/bookhub/books/mine',
+          {
+            credentials: 'include',
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -28,14 +31,14 @@ const MyBooks = () => {
     fetchMyBooks();
   }, []);
 
-    const handleDetailsClick = (book) => {
+  const handleDetailsClick = (book) => {
     console.log('detalles del libro:', book);
     navigate(`/book-details/${book._id}`);
   };
 
   return (
     <div>
-      <Header/>
+      <Header />
       <div className="catalog p-5 min-h-screen">
         <h2
           className="text-3xl font-semibold mb-4 text-center tracking-widest"
@@ -44,9 +47,7 @@ const MyBooks = () => {
           MIS LIBROS
         </h2>
 
-        {/* Contenedor centrado y con ancho máximo */}
         <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Grid flexible con tarjetas ajustables */}
           <div className="grid gap-9 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] justify-items-center">
             {books.length > 0 ? (
               books.map((book) => (
@@ -59,15 +60,16 @@ const MyBooks = () => {
                 />
               ))
             ) : (
-              <p className="col-span-full text-center text-gray-500">No hay libros disponibles.</p>
+              <p className="col-span-full text-center text-gray-500">
+                No hay libros disponibles.
+              </p>
             )}
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
-      
-  )
-}
+  );
+};
 
-export default MyBooks
+export default MyBooks;

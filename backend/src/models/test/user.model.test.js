@@ -1,6 +1,6 @@
 const User = require('../user.model');
 
-describe('Modelo User - validaciones', () => {
+describe('Modelo User', () => {
   it('falla si faltan campos obligatorios', async () => {
     const user = new User({});
 
@@ -20,13 +20,9 @@ describe('Modelo User - validaciones', () => {
     const user = new User({
       name: 'Test User',
       email: 'test@example.com',
-      password: 'securepassword123'
+      password: 'securepassword123',
     });
 
     await expect(user.validate()).resolves.toBeUndefined();
   });
-
-
-
-
 });

@@ -14,19 +14,15 @@ router.post('/logout', (req, res) => {
   return res.status(200).json({ message: 'Logout exitoso' });
 });
 
-// ⚠️ Importante: /me debe ir antes de /:id
 router.get('/me', authMiddleware, userController.getMe);
-// Likes
+
 router.post('/me/like/:bookId', authMiddleware, userController.likeBook);
 router.delete('/me/unlike/:bookId', authMiddleware, userController.unlikeBook);
 router.get('/me/liked-books', authMiddleware, userController.getLikedBooks);
-// 🆕 Ruta para actualizar un usuario
+
 router.put('/:id', authMiddleware, userController.updateUserById);
 
-// Rutas que dependen de ID (delete, get)
 router.delete('/:id', authMiddleware, userController.deleteUserById);
 router.get('/:id', authMiddleware, userController.getUserById);
-
-
 
 module.exports = router;

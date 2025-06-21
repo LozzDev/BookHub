@@ -3,7 +3,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import LikedBooks from '../LikedBooks';
 
-// 🧪 mock useNavigate
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
@@ -12,7 +11,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// 🧪 mock Header y BookCard con contenido visible
 vi.mock('../../components/Header', () => ({
   default: () => <div data-testid="mock-header">MockHeader</div>,
 }));
