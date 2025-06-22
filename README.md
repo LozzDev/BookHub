@@ -180,7 +180,7 @@ VITE_API = your backend direction example http://localhost:3000
 - Enable offline reading with Service Workers
 - Admin panel for content moderation
 - Dark mode and accessibility improvements
-
+- Implement ads during book downloads to reward authors and contributors who support the platform
 ---
 
 ## 🌐 **Preview**
